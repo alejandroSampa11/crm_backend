@@ -4,7 +4,7 @@ const resolvers = require('./db/resolvers.js')
 const conectarDB = require('./config/db.js')
 const jwt = require('jsonwebtoken')
 require('dotenv').config({path: 'variables.env'})
-const cors = require('cors')
+
 
 //CONECTAR A LA BASE DE DATOS
 conectarDB();
@@ -32,11 +32,6 @@ const server = new ApolloServer({
         }
     }
 });
-
-server.applyMiddleware({
-    app: cors(), // Enable CORS for all routes
-    path: '/'
-  });
 
 //ARRANCAR SERVIDOR
 server.listen().then(({url})=>{
