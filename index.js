@@ -1,10 +1,15 @@
-const {ApolloServer} = require('apollo-server')
+const {ApolloServer} = require('apollo-server-express')
 const typeDefs = require('./db/schema.js')
 const resolvers = require('./db/resolvers.js')
 const conectarDB = require('./config/db.js')
 const jwt = require('jsonwebtoken')
+const cors = require('cors')
+const express = require('express');
 require('dotenv').config({path: 'variables.env'})
 
+const app = express();
+// Aplicar cors a la aplicación express
+app.use(cors());
 
 //CONECTAR A LA BASE DE DATOS
 conectarDB();
@@ -33,7 +38,18 @@ const server = new ApolloServer({
     }
 });
 
+server.start().then(() => {
+    // Aplicar el servidor Apollo a la aplicación express
+    server.applyMiddleware({ app });
+
+    // Iniciar el servidor
+    app.listen({ port: process.env.PORT || 4000 }, () =>
+        console.log(`🚀 Server ready at http://localhost:${process.env.PORT || 4000}${server.graphqlPath}`)
+    );
+});
+
+
 //ARRANCAR SERVIDOR
-server.listen().then(({url})=>{
-    console.log(`Servidor Listo en la URL ${url}`)
-})
+// server.listen().then(({url})=>{
+//     console.log(`Servidor Listo en la URL ${url}`)
+// })
