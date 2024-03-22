@@ -9,7 +9,9 @@ require('dotenv').config({path: 'variables.env'})
 
 const app = express();
 // Aplicar cors a la aplicación express
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 
 //CONECTAR A LA BASE DE DATOS
 conectarDB();
