@@ -8,10 +8,9 @@ const express = require('express');
 require('dotenv').config({path: 'variables.env'})
 
 const app = express();
+
 // Aplicar cors a la aplicación express
-app.use(cors({
-    origin: 'https://crm-frontend-zeta.vercel.app/'
-}));
+app.use(cors());
 
 //CONECTAR A LA BASE DE DATOS
 conectarDB();
@@ -40,18 +39,20 @@ const server = new ApolloServer({
     }
 });
 
+
+
 server.start().then(() => {
     // Aplicar el servidor Apollo a la aplicación express
     server.applyMiddleware({ app });
 
-    // Iniciar el servidor
+    // Iniciar el servidor Express
     app.listen({ port: process.env.PORT || 4000 }, () =>
-        console.log(`🚀 Server ready at http://localhost:${process.env.PORT || 4000}${server.graphqlPath}`)
+       console.log(`🚀 Server ready at http://localhost:${process.env.PORT || 4000}${server.graphqlPath}`)
     );
+}).catch(err => {
+    console.log('Error starting server: ', err);
 });
-
-
-//ARRANCAR SERVIDOR
-// server.listen().then(({url})=>{
-//     console.log(`Servidor Listo en la URL ${url}`)
-// })
+// ARRANCAR SERVIDOR
+//  server.listen().then(({url})=>{
+//      console.log(`Servidor Listo en la URL ${url}`)
+//  })
