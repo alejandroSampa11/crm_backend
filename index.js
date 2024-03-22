@@ -4,7 +4,7 @@ const resolvers = require('./db/resolvers.js')
 const conectarDB = require('./config/db.js')
 const jwt = require('jsonwebtoken')
 require('dotenv').config({path: 'variables.env'})
-import cors from 'cors';
+const cors = require('cors')
 
 //CONECTAR A LA BASE DE DATOS
 conectarDB();
